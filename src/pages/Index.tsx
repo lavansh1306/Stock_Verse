@@ -190,9 +190,9 @@ const Index = () => {
       
       {/* Content Layer */}
       <div className={`min-h-screen ${themes[currentTheme].text} `}>
-        <div className="container mx-auto px-4 py-6" data-tour="welcome">
+        <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-6" data-tour="welcome">
           {/* Header */}
-          <div className={`${themes[currentTheme].glass} backdrop-blur-md p-4 rounded-xl mb-6 
+          <div className={`${themes[currentTheme].glass} backdrop-blur-md p-2 sm:p-4 rounded-xl mb-3 sm:mb-6 
             ${themes[currentTheme].border} border transition-all duration-500 
             hover:shadow-2xl ${themes[currentTheme].animation}`} data-tour="header">
             <Header 
@@ -204,75 +204,75 @@ const Index = () => {
           </div>
           
           {/* Theme Buttons */}
-          <div className="flex gap-4 mb-6 flex-wrap" data-tour="themes">
+          <div className="flex gap-2 sm:gap-4 mb-3 sm:mb-6 flex-wrap" data-tour="themes">
             <Button 
               onClick={() => handleThemeChange('default', heroBg)}
               className={`${themes.default.button} ${currentTheme === 'default' ? themes.default.active : ''} 
-                transform transition-all duration-300 hover:scale-105 relative overflow-hidden`}
+                transform transition-all duration-300 hover:scale-105 relative overflow-hidden text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2`}
             >
-              <span className="">Default Theme</span>
+              <span className="">Default</span>
             </Button>
             <Button 
               onClick={() => handleThemeChange('doremon', doremonBg)}
               className={`${themes.doremon.button} ${currentTheme === 'doremon' ? themes.doremon.active : ''} 
-                transform transition-all duration-300 hover:scale-105 relative overflow-hidden`}
+                transform transition-all duration-300 hover:scale-105 relative overflow-hidden text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2`}
             >
-              <span className="">Doremon World</span>
+              <span className="">Doremon</span>
             </Button>
             <Button 
               onClick={() => handleThemeChange('pikachu', pikachuBg)}
               className={`${themes.pikachu.button} ${currentTheme === 'pikachu' ? themes.pikachu.active : ''} 
-                transform transition-all duration-300 hover:scale-105 relative overflow-hidden`}
+                transform transition-all duration-300 hover:scale-105 relative overflow-hidden text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2`}
             >
-              <span className="">Pikachu World</span>
+              <span className="">Pikachu</span>
             </Button>
             <Button 
               onClick={() => handleThemeChange('shinchan', shinchanBg)}
               className={`${themes.shinchan.button} ${currentTheme === 'shinchan' ? themes.shinchan.active : ''} 
-                transform transition-all duration-300 hover:scale-105 relative overflow-hidden`}
+                transform transition-all duration-300 hover:scale-105 relative overflow-hidden text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-2`}
             >
-              <span className="">Shinchan World</span>
+              <span className="">Shinchan</span>
             </Button>
           </div>
           
           {/* XP Bar and Portfolio Value */}
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <div className={`${themes[currentTheme].glass} backdrop-blur-md p-4 rounded-xl transition-all duration-500 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mb-3 sm:mb-6">
+            <div className={`${themes[currentTheme].glass} backdrop-blur-md p-3 sm:p-4 rounded-xl transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`}>
-              <h3 className={`${themes[currentTheme].heading} mb-2 animate-pulse`}>Experience Level</h3>
+              <h3 className={`${themes[currentTheme].heading} text-lg sm:text-2xl mb-2 animate-pulse`}>Experience Level</h3>
               <XPBar level={7} currentXP={850} maxXP={1000} />
             </div>
-            <div className={`${themes[currentTheme].glass} backdrop-blur-md p-4 rounded-xl transition-all duration-500 
+            <div className={`${themes[currentTheme].glass} backdrop-blur-md p-3 sm:p-4 rounded-xl transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`} data-tour="portfolio">
-              <h3 className={`${themes[currentTheme].heading} mb-2 animate-pulse`}>Portfolio Value</h3>
-              <div className="text-3xl font-bold text-center">
+              <h3 className={`${themes[currentTheme].heading} text-lg sm:text-2xl mb-2 animate-pulse`}>Portfolio Value</h3>
+              <div className="text-2xl sm:text-3xl font-bold text-center">
                 ₹{portfolioValue.toLocaleString()}
               </div>
-              <div className="text-sm text-muted-foreground text-center mt-1">
+              <div className="text-xs sm:text-sm text-muted-foreground text-center mt-1">
                 Total Investment Value
               </div>
             </div>
           </div>
           
           {/* News Ticker */}
-          <div className="mb-6" data-tour="news">
+          <div className="mb-3 sm:mb-6" data-tour="news">
             <div className={`${themes[currentTheme].glass} backdrop-blur-md rounded-xl overflow-hidden transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`}>
-              <div className={`p-3 ${themes[currentTheme].highlight} font-semibold bg-gradient-to-r from-transparent 
+              <div className={`p-2 sm:p-3 text-sm sm:text-base ${themes[currentTheme].highlight} font-semibold bg-gradient-to-r from-transparent 
                 via-current to-transparent animate-pulse`}>Market News</div>
               <NewsTicker />
             </div>
           </div>
           
           {/* Charts and Portfolio */}
-          <div className="grid lg:grid-cols-3 gap-6 mb-6">
-            <div className={`lg:col-span-2 ${themes[currentTheme].glass} backdrop-blur-md rounded-xl p-6 transition-all duration-500 
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-6 mb-3 sm:mb-6">
+            <div className={`lg:col-span-2 ${themes[currentTheme].glass} backdrop-blur-md rounded-xl p-3 sm:p-6 transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`} data-tour="charts">
               <RandomGraph />
             </div>
-            <div className={`${themes[currentTheme].glass} backdrop-blur-md rounded-xl p-6 transition-all duration-500 
+            <div className={`${themes[currentTheme].glass} backdrop-blur-md rounded-xl p-3 sm:p-6 transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`}>
-              <h3 className={`${themes[currentTheme].heading} mb-4 animate-pulse`}>Portfolio Manager</h3>
+              <h3 className={`${themes[currentTheme].heading} text-lg sm:text-2xl mb-4 animate-pulse`}>Portfolio Manager</h3>
               <PortfolioManager 
                 onPortfolioUpdate={setPortfolioValue}
                 techStock={techStockData}
@@ -284,20 +284,20 @@ const Index = () => {
           </div>
           
           {/* Stock Cards */}
-          <div className="mb-6" data-tour="stocks">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className={`${themes[currentTheme].heading} text-2xl animate-pulse`}>Live Market Data</h2>
+          <div className="mb-3 sm:mb-6" data-tour="stocks">
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <h2 className={`${themes[currentTheme].heading} text-xl sm:text-2xl animate-pulse`}>Live Market Data</h2>
             </div>
             
             {allStocksLoading && allStocks.length === 0 ? (
               <div className="text-center py-8">
                 <div className="animate-spin mx-auto mb-4">
-                  <RefreshCw className="w-8 h-8 text-primary" />
+                  <RefreshCw className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                 </div>
-                <p className={`${themes[currentTheme].text}`}>Loading live market data...</p>
+                <p className={`${themes[currentTheme].text} text-sm sm:text-base`}>Loading live market data...</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {allStocks.map((stock, index) => (
                   <LiveStockCard
                     key={stock.symbol}
@@ -313,13 +313,13 @@ const Index = () => {
             
             {allStocksError && (
               <div className="text-center py-4">
-                <p className="text-red-500 text-sm">Failed to load some market data. Using cached data.</p>
+                <p className="text-red-500 text-xs sm:text-sm">Failed to load some market data. Using cached data.</p>
               </div>
             )}
           </div>
           
           {/* Additional Market Analysis */}
-          <div className="mb-6">
+          <div className="mb-3 sm:mb-6">
             <div className={`${themes[currentTheme].glass} backdrop-blur-md rounded-xl transition-all duration-500 
               ${themes[currentTheme].border} border transform hover:scale-[1.02] ${themes[currentTheme].animation}`}>
               <RandomGraph />
