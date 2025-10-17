@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import asyncio
+import httpx
 
 app = FastAPI()
 
@@ -71,3 +72,16 @@ async def test():
     Simple test endpoint to verify server is working.
     """
     return {"status": "Server is running!", "data_points": len(df)}
+
+@app.get("/proxy/yahoo/{symbol}")
+async def proxy_yahoo_finance(symbol: str):
+    """
+    Proxy endpoint for Yahoo Finance data
+    """
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1m&range=1d"
+    async with httpx.AsyncClient() as client:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response = await client.get(url, headers=headers)
+        return response.json()
