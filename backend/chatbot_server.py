@@ -108,4 +108,7 @@ StockBot:
         return jsonify({"response": "Sorry, I couldn't process that. Please ask a stock-related question!"})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Get port from environment variable (for Render) or use default
+    port = int(os.environ.get('PORT', 5000))
+    # Bind to 0.0.0.0 for production
+    app.run(host='0.0.0.0', port=port, debug=False)
