@@ -8,7 +8,12 @@ app = FastAPI()
 # Enable CORS so your React frontend can access the API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace "*" with your frontend URL in production
+    allow_origins=[
+        "https://stockver-lavansh1306s-projects.vercel.app",
+        "http://localhost:8080",
+        "http://localhost:8081"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

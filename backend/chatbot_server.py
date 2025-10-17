@@ -9,7 +9,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend integration
+CORS(app, resources={
+    r"/*": {
+        "origins": [
+            "https://stockver-lavansh1306s-projects.vercel.app",
+            "http://localhost:8080",
+            "http://localhost:8081"
+        ],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Configure Google Gemini API
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
