@@ -15,10 +15,12 @@ CORS(app, resources={
             "https://stock-verse-nine.vercel.app",
             "https://stock-verse-git-main-lavansh1306s-projects.vercel.app",
             "https://stock-verse-6czw53am8-lavansh1306s-projects.vercel.app",
+            "https://stock-verse-s177qxsp7-lavansh1306s-projects.vercel.app",
             "http://localhost:8080",
             "http://localhost:8081",
             "http://localhost:3000",
-            "http://localhost:5173"
+            "http://localhost:5173",
+            "*"  # Temporarily allow all origins while testing
         ],
         "methods": ["GET", "POST", "OPTIONS", "HEAD"],
         "allow_headers": ["Content-Type", "Authorization"],

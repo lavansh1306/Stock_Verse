@@ -13,10 +13,12 @@ app.add_middleware(
         "https://stock-verse-nine.vercel.app",
         "https://stock-verse-git-main-lavansh1306s-projects.vercel.app",
         "https://stock-verse-6czw53am8-lavansh1306s-projects.vercel.app",
+        "https://stock-verse-s177qxsp7-lavansh1306s-projects.vercel.app",
         "http://localhost:8080",
         "http://localhost:8081",
         "http://localhost:3000",
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "*"  # Temporarily allow all origins while testing
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS", "HEAD"],
@@ -111,13 +113,20 @@ async def proxy_yahoo_finance(symbol: str):
             if response.status_code != 200:
                 raise HTTPException(status_code=response.status_code, detail="Failed to fetch data from Yahoo Finance")
                 
+            data = response.json()
+            
+            # Add CORS headers to the response
+            headers = {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Max-Age": "3600"
+            }
+            
             return JSONResponse(
-                content=response.json(),
-                headers={
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET, OPTIONS",
-                    "Access-Control-Allow-Headers": "*"
-                }
+                content=data,
+                headers=headers
             )
             
     except httpx.TimeoutException:
