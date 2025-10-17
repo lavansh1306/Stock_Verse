@@ -10,6 +10,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://stockver-lavansh1306s-projects.vercel.app",
+        "https://stockver.vercel.app",
         "http://localhost:8080",
         "http://localhost:8081"
     ],
