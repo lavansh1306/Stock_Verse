@@ -23,8 +23,8 @@ const REAL_STOCKS = [
   { symbol: 'WMT', name: 'Walmart Inc.', displaySymbol: 'RETAIL', displayName: 'Retail Power' }
 ];
 
-// Free API endpoint that doesn't require authentication
-const FREE_API_BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+// API endpoint through our proxy server
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export class MarketDataService {
   private static instance: MarketDataService;
@@ -60,7 +60,7 @@ export class MarketDataService {
 
         try {
           // Fetch from Yahoo Finance free API (fast-timeout; fallback on CORS/slow)
-          const response = await this.fetchWithTimeout(`${FREE_API_BASE}${stockInfo.symbol}?interval=1m&range=1d`);
+          const response = await this.fetchWithTimeout(`${API_BASE}/proxy/yahoo/${stockInfo.symbol}`);
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -158,7 +158,7 @@ export class MarketDataService {
     try {
       const historicalPromises = REAL_STOCKS.map(async (stockInfo) => {
         try {
-          const response = await this.fetchWithTimeout(`${FREE_API_BASE}${stockInfo.symbol}?interval=1d&range=${days}d`);
+          const response = await this.fetchWithTimeout(`${API_BASE}/proxy/yahoo/${stockInfo.symbol}?range=${days}d`);
           
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
