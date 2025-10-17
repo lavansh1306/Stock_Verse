@@ -14,11 +14,17 @@ CORS(app, resources={
         "origins": [
             "https://stockver-lavansh1306s-projects.vercel.app",
             "https://stockver.vercel.app",
+            "https://stock-mg294db-lavansh1306s-projects.vercel.app",
             "http://localhost:8080",
-            "http://localhost:8081"
+            "http://localhost:8081",
+            "http://localhost:3000",
+            "http://localhost:5173"
         ],
-        "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
+        "methods": ["GET", "POST", "OPTIONS", "HEAD"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "expose_headers": ["*"],
+        "supports_credentials": True,
+        "max_age": 3600
     }
 })
 
