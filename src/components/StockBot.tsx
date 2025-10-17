@@ -39,7 +39,8 @@ export const StockBot = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/get_response", {
+      const ASSISTANT_URL = import.meta.env.VITE_ASSISTANT_URL || "http://localhost:5000";
+      const response = await fetch(`${ASSISTANT_URL}/get_response`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
