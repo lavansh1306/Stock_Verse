@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import asyncio
@@ -80,27 +80,44 @@ async def test():
     """
     return {"status": "Server is running!", "data_points": len(df)}
 
-from fastapi import HTTPException
+@app.get("/api/stock-data")
+async def get_stock_data(limit: int = 50):
+    """
+    Get stock data from CSV with optional limit
+    """
+    try:
+        # Return the last 'limit' rows from the dataframe
+        data = df.tail(limit).to_dict(orient='records')
+        return {
+            "status": "success",
+            "count": len(data),
+            "data": data
+        }
+    except Exception as e:
+        print(f"Error fetching stock data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
 
 @app.get("/proxy/yahoo/{symbol}")
-async def proxy_yahoo_finance(symbol: str):
+async def proxy_yahoo_finance(symbol: str, request: Request):
     """
     Proxy endpoint for Yahoo Finance data
     """
     try:
-        # Extract symbol and parameters
-        actual_symbol = symbol
+        # Get query parameters from the request
+        query_params = dict(request.query_params)
+        
+        # Default parameters for Yahoo Finance API
         params = {
-            "interval": "1m",
-            "range": "1d"
+            "interval": query_params.get("interval", "1m"),
+            "range": query_params.get("range", "1d")
         }
         
-        if "?range=" in symbol:
-            actual_symbol, range_val = symbol.split("?range=")
-            params["range"] = range_val
-            
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{actual_symbol}"
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+        
+        print(f"Fetching from Yahoo Finance: {url} with params: {params}")
         
         async with httpx.AsyncClient(timeout=30.0) as client:
             headers = {
@@ -111,28 +128,43 @@ async def proxy_yahoo_finance(symbol: str):
             response = await client.get(url, headers=headers, params=params)
             
             if response.status_code != 200:
+                print(f"Yahoo Finance API error: {response.status_code} - {response.text}")
                 raise HTTPException(status_code=response.status_code, detail="Failed to fetch data from Yahoo Finance")
                 
             data = response.json()
             
-            # Add CORS headers to the response
-            headers = {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Max-Age": "3600"
-            }
-            
+            # Return with proper CORS headers
             return JSONResponse(
                 content=data,
-                headers=headers
+                headers={
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                    "Access-Control-Allow-Headers": "*",
+                }
             )
             
     except httpx.TimeoutException:
+        print(f"Timeout fetching data for {symbol}")
         raise HTTPException(status_code=504, detail="Request to Yahoo Finance timed out")
     except httpx.RequestError as e:
+        print(f"Request error for {symbol}: {str(e)}")
         raise HTTPException(status_code=502, detail=f"Failed to fetch data: {str(e)}")
     except Exception as e:
-        print(f"Error in proxy: {str(e)}")
+        print(f"Error in proxy for {symbol}: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# Add OPTIONS endpoint for CORS preflight
+@app.options("/proxy/yahoo/{symbol}")
+async def proxy_yahoo_finance_options(symbol: str):
+    """
+    Handle CORS preflight requests
+    """
+    return JSONResponse(
+        content={},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Max-Age": "3600"
+        }
+    )
