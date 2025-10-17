@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import pandas as pd
 import asyncio
 import httpx
@@ -96,9 +97,6 @@ async def get_stock_data(limit: int = 50):
     except Exception as e:
         print(f"Error fetching stock data: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
-from fastapi import HTTPException, Request
-from fastapi.responses import JSONResponse
 
 @app.get("/proxy/yahoo/{symbol}")
 async def proxy_yahoo_finance(symbol: str, request: Request):
