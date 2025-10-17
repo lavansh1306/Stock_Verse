@@ -13,6 +13,7 @@ app.add_middleware(
         "https://stockver-lavansh1306s-projects.vercel.app",
         "https://stockver.vercel.app",
         "https://stock-mg294db-lavansh1306s-projects.vercel.app",
+        "https://stock-verse-lavansh1306s-projects.vercel.app"
         "http://localhost:8080",
         "http://localhost:8081",
         "http://localhost:3000",
