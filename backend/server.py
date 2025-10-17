@@ -78,10 +78,23 @@ async def proxy_yahoo_finance(symbol: str):
     """
     Proxy endpoint for Yahoo Finance data
     """
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1m&range=1d"
-    async with httpx.AsyncClient() as client:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    try:
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+        params = {
+            "interval": "1m",
+            "range": "1d"
         }
-        response = await client.get(url, headers=headers)
-        return response.json()
+        if "range" in symbol:
+            # Handle historical data requests
+            symbol, range_val = symbol.split("?range=")
+            params["range"] = range_val
+
+        async with httpx.AsyncClient() as client:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            }
+            response = await client.get(url, headers=headers, params=params)
+            return response.json()
+    except Exception as e:
+        print(f"Error in proxy: {str(e)}")
+        return {"error": str(e)}
