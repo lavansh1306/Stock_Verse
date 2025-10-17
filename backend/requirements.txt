@@ -1,0 +1,7 @@
+fastapi==0.104.1
+pandas==2.1.4
+uvicorn[standard]==0.24.0
+flask==3.0.0
+flask-cors==4.0.0
+google-generativeai==0.3.2
+python-dotenv==1.0.0
