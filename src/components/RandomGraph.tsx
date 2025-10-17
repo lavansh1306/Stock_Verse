@@ -140,9 +140,12 @@ export const RandomGraph = () => {
       }
       const csvData = await response.json();
       
+      // Extract data array from response
+      const dataArray = csvData.data || csvData;
+      
       // Convert CSV data to our format
-      const formattedData: DataPoint[] = csvData.map((item: any) => ({
-        time: new Date(item.time).toLocaleTimeString('en-US', { 
+      const formattedData: DataPoint[] = dataArray.map((item: any) => ({
+        time: new Date(item.date || item.time).toLocaleTimeString('en-US', { 
           hour: '2-digit', 
           minute: '2-digit' 
         }),

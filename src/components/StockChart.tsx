@@ -45,13 +45,18 @@ export const StockChart = () => {
       const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_BASE}/api/stock-data`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const points: { time: string; value: number }[] = await response.json();
+      const responseData = await response.json();
+      const points = responseData.data || responseData;
 
-      if (!points.length) throw new Error("No data received");
+      if (!points || !points.length) throw new Error("No data received");
 
       setData((prev) => {
         const latestPoint = points[points.length - 1];
-        const newOhlc = transformData(prev, latestPoint);
+        const pointData = {
+          time: latestPoint.date || latestPoint.time,
+          value: latestPoint.close || latestPoint.value || latestPoint.open
+        };
+        const newOhlc = transformData(prev, pointData);
         const newData = [...prev, newOhlc];
         return newData.length > 50 ? newData.slice(-50) : newData;
       });

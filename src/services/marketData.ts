@@ -30,7 +30,7 @@ export class MarketDataService {
   private static instance: MarketDataService;
   private cache: Map<string, { data: StockData; timestamp: number }> = new Map();
   private readonly CACHE_DURATION = 30000; // 30 seconds cache
-  private readonly FETCH_TIMEOUT_MS = 10000; // 10 seconds timeout
+  private readonly FETCH_TIMEOUT_MS = 30000; // 30 seconds timeout (Render cold start)
 
   private async fetchWithTimeout(url: string): Promise<Response> {
     const controller = new AbortController();
