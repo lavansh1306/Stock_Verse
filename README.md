@@ -1,6 +1,6 @@
-# HeisenHackstartm
+# Stock_Verse
 
-A financial learning platform that gamifies stock market education for young investors, combining real-time market data with interactive games and smart assistance.
+A modern financial learning platform that gamifies stock market education for young investors, combining real-time market data with interactive games and smart assistance.
 
 ## Features
 
