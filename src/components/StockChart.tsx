@@ -42,7 +42,8 @@ export const StockChart = () => {
 
   const fetchNextData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/stock-data");
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_BASE}/api/stock-data`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const points: { time: string; value: number }[] = await response.json();
 

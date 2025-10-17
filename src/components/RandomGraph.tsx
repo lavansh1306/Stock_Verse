@@ -133,7 +133,8 @@ export const RandomGraph = () => {
   // Fetch real data from backend
   const fetchStockData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/stock-data?limit=50');
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_BASE}/api/stock-data?limit=50`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
