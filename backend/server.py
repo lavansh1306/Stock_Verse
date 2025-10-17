@@ -10,10 +10,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://stockver-lavansh1306s-projects.vercel.app",
-        "https://stockver.vercel.app",
-        "https://stock-mg294db-lavansh1306s-projects.vercel.app",
-        "https://stock-verse-lavansh1306s-projects.vercel.app"
+        "https://stock-verse-nine.vercel.app",
+        "https://stock-verse-git-main-lavansh1306s-projects.vercel.app",
+        "https://stock-verse-6czw53am8-lavansh1306s-projects.vercel.app",
         "http://localhost:8080",
         "http://localhost:8081",
         "http://localhost:3000",
